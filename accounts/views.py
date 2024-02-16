@@ -22,7 +22,6 @@ def login(request):
 
 @api_view(['POST'])
 def register(request):
-    print(request.data)
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -33,10 +32,17 @@ def register(request):
         return Response({"token": token.key, "user": serializer.data})
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def logout(request):
+    # Delete the token to log the user out
+    request.user.auth_token.delete()
+    return Response({"detail": "Successfully logged out."}, status=status.HTTP_204_NO_CONTENT)
+
 #Make sure the tokens works also template for authentificated user 
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def test_token(request):
     print(request.user)
-    return Response("passed for {}".format(request.user.email))
+    return Response("passed for {}".format(request.user.username))
