@@ -4,9 +4,8 @@ This document provides instructions for setting up and running the Django REST A
 ## Prerequisites
 Before you begin, ensure you have the following installed on your system:
 
-* Python 3.8 or higher
-* pip (Python package manager)
-* Virtualenv (optional, but recommended for creating isolated Python environments)
+* Python 3.10 or higher
+* pip (Python package manager, Python include pip) verify installation with command: pip --version
 
 ## Installation
 Follow these steps to set up the Django REST API application on your local development machine.
@@ -15,10 +14,10 @@ Follow these steps to set up the Django REST API application on your local devel
 Clone the repository to your local machine using Git:
 
 ```sh
-git clone https://example.com/your-repository.git
+git clone https://github.com/jg-chickenbook/chickenbook-server.git
 ```
 ```sh
-cd your-repository
+cd chickenbook-server
 ```
 
 2. Create and Activate a Virtual Environment
@@ -35,6 +34,8 @@ For Windows:
 
 ```sh
 python -m venv env
+```
+```sh
 .\env\Scripts\activate
 ```
 
