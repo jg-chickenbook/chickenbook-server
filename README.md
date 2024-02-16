@@ -16,6 +16,8 @@ Clone the repository to your local machine using Git:
 
 ```sh
 git clone https://example.com/your-repository.git
+```
+```sh
 cd your-repository
 ```
 
@@ -24,6 +26,8 @@ For Unix/macOS:
 
 ```sh
 python3 -m venv env
+```
+```sh
 source env/bin/activate
 ```
 
