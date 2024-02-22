@@ -1,20 +1,28 @@
 POST http://127.0.0.1:8000/api/accounts/login
 Content-Type: application/json
 
-{"username": "Maradona5", "password": "Ahoj12345"}
+{"username": "KKKK", "password": "Ahoj12345"}
 
 ###
 
 POST http://127.0.0.1:8000/api/accounts/register
 Content-Type: application/json
 
-{"username": "Maradona5", "password": "Ahoj12345", "email": "maradona@gmail.com"}
+{"username": "KKKK", "password": "Ahoj12345", "email": "KKKK@gmail.com"}
 
 ###
 
 GET http://127.0.0.1:8000/api/accounts/test_token
 Content-Type: application/json
 # HERE WE NEED TO RECIVE AS A HEADER LINE BELOW key: Authorization value: TOKEN 34klnasldaoid...(user token stored on client side) 
-Authorization: Token 34ee0257c8522fb2e7ff2fdd0858d34404d775e4
+Authorization: Token 9f014f14fcc4b6c9508426a8edb1eb2db6fd80f1
+
+{}
+
+###
+
+POST http://127.0.0.1:8000/api/accounts/logout
+Content-Type: application/json
+Authorization: Token 9f014f14fcc4b6c9508426a8edb1eb2db6fd80f1
 
 {}
