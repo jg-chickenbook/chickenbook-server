@@ -13,6 +13,14 @@ from rest_framework.permissions import IsAuthenticated
 
 @api_view(['POST'])
 def login(request):
+    """_summary_
+
+    Args:
+        request (POST): _description_
+
+    Returns:
+        json: with auth(token) and user data  
+    """
     user = get_object_or_404(User, username=request.data['username'])
     if not user.check_password(request.data['password']):
         return Response({"detail": "Not found"}, status=status.HTTP_400_BAD_REQUEST)
@@ -22,6 +30,14 @@ def login(request):
 
 @api_view(['POST'])
 def register(request):
+    """_summary_
+
+    Args:
+        request (POST): _description_
+
+    Returns:
+        json: if serializer is valid returns token and user info 
+    """
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -35,6 +51,15 @@ def register(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def logout(request):
+    """_summary_
+
+    Args:
+        request (POST): _description_
+
+    Token Deletion
+    Returns:
+        json: logout msg
+    """
     # Delete the token to log the user out
     request.user.auth_token.delete()
     return Response({"detail": "Successfully logged out."}, status=status.HTTP_204_NO_CONTENT)
@@ -44,5 +69,14 @@ def logout(request):
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def test_token(request):
+    """_summary_
+
+    Args:
+        request (GET): _description_
+
+    Function return passed msg if user is logged in !
+    Returns:
+        json: validation msg
+    """
     print(request.user)
     return Response("passed for {}".format(request.user.username))
