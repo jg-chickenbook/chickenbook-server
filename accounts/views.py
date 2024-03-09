@@ -26,7 +26,10 @@ def login(request):
         return Response({"detail": "Not found"}, status=status.HTTP_400_BAD_REQUEST)
     token, created = Token.objects.get_or_create(user=user)
     serializer = UserSerializer(instance=user)
-    return Response({"token": token.key, "user": serializer.data})
+    # tady se mi vrací v Response celý objekt user to asi není to pravé protože tam je i zahashované heslo
+    # return Response({"token": token.key, "user": serializer.data})
+    # spíš by zde mělo být něco jako je toto
+    return Response({"token": token.key, "user": serializer.data.get('username')})
 
 @api_view(['POST'])
 def register(request):
