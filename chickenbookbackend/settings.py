@@ -153,3 +153,7 @@ CORS_ALLOW_ALL_ORIGINS = True # allows for all domains
 # CORS setting for specified headers
 # CORS_ALLOW_METHODS
 # CORS_ALLOW_HEADERS
+
+
+
+# AUTH_USER_MODEL = 'accounts.User'

@@ -1,14 +1,14 @@
 POST http://127.0.0.1:8000/api/accounts/login
 Content-Type: application/json
 
-{"username": "KKKK", "password": "Ahoj12345"}
+{"username": "KKK", "password": "Ahoj12345"}
 
 ###
 
 POST http://127.0.0.1:8000/api/accounts/register
 Content-Type: application/json
 
-{"username": "KKKK", "password": "Ahoj12345", "email": "KKKK@gmail.com"}
+{"username": "XXX", "password": "Ahoj12345", "email": "xxx@xxx.com"}
 
 ###
 
@@ -23,6 +23,6 @@ Authorization: Token 9f014f14fcc4b6c9508426a8edb1eb2db6fd80f1
 
 POST http://127.0.0.1:8000/api/accounts/logout
 Content-Type: application/json
-Authorization: Token 9f014f14fcc4b6c9508426a8edb1eb2db6fd80f1
+Authorization: Token eaef9be73507a6a128baf27dcd393b0b30444506
 
 {}
