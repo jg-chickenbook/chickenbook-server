@@ -37,6 +37,7 @@ def login(request):
     username = request.data.get('username')
     password = request.data.get('password')
     user = authenticate(username=username, password=password)  # This method handles user verification
+    print(user)
     if user is not None:
         token, created = Token.objects.get_or_create(user=user)
         serializer = UserSerializer(user)
@@ -48,6 +49,8 @@ def login(request):
     else:
         # Providing a more generic error message for security
         return Response({"detail": "Invalid credentials."}, status=status.HTTP_400_BAD_REQUEST)
+    
+    
 
 @api_view(['POST'])
 def register(request):
