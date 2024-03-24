@@ -5,6 +5,8 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User 
 from django.contrib.auth import authenticate
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 # from django.shortcuts import get_object_or_404
 
 # imports for make sure the tokens works
@@ -52,34 +54,62 @@ def login(request):
     
     
 
+# @api_view(['POST'])
+# def register(request):
+#     """_summary_
+
+#     Args:
+#         request (POST): _description_
+
+#     Returns:
+#         json: if serializer is valid returns token and user info 
+#     """
+    
+#     username = request.data.get('username', '')
+#     email = request.data.get('email', '')
+    
+#     if User.objects.filter(username=username).exists():
+#         return Response({"detail": f"User with username {username} already exists."}, status=status.HTTP_400_BAD_REQUEST)
+    
+#     if User.objects.filter(email=email).exists():
+#         return Response({"detail": f"User with email {email} already exists."}, status=status.HTTP_400_BAD_REQUEST)
+    
+#     serializer = UserSerializer(data=request.data)
+#     if serializer.is_valid():
+#         serializer.save()
+#         user = User.objects.get(username=request.data['username'])
+#         user.set_password(request.data['password'])
+#         user.save()
+#         token = Token.objects.create(user=user)
+#         return Response({"token": token.key, "user": serializer.data})
+#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['POST'])
 def register(request):
-    """_summary_
-
-    Args:
-        request (POST): _description_
-
-    Returns:
-        json: if serializer is valid returns token and user info 
-    """
-    
     username = request.data.get('username', '')
     email = request.data.get('email', '')
-    
+    password = request.data.get('password', '')
+
+    # Check if user or email already exists
     if User.objects.filter(username=username).exists():
-        return Response({"error": f"User with {username} already exists."}, status=status.HTTP_400_BAD_REQUEST)
-    
+        return Response({"detail": f"User with username {username} already exists."}, status=status.HTTP_400_BAD_REQUEST)
+
     if User.objects.filter(email=email).exists():
-        return Response({"error": f"User with {email} already exists."}, status=status.HTTP_400_BAD_REQUEST)
-    
+        return Response({"detail": f"User with email {email} already exists."}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Validate password
+    try:
+        validate_password(password)
+    except ValidationError as e:
+        return Response({"detail": e.messages}, status=status.HTTP_400_BAD_REQUEST)
+
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save()
-        user = User.objects.get(username=request.data['username'])
-        user.set_password(request.data['password'])
+        user = serializer.save()
+        user.set_password(password)
         user.save()
         token = Token.objects.create(user=user)
-        return Response({"token": token.key, "user": serializer.data})
+        return Response({"token": token.key, "user": serializer.data}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
