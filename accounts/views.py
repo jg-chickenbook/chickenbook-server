@@ -97,9 +97,9 @@ def test_token(request):
     return Response("passed for {}".format(request.user.username))
 
 @api_view(['GET'])
-def get_user_by_username(request, username):
+def get_user_public_profile(request, username):
     try:
-        user = User.objects.get(username=username)
+        user = UserProfile.objects.get(username=username, is_visible=True)
         serializer = UserPublicSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
     except User.DoesNotExist:
@@ -108,19 +108,24 @@ def get_user_by_username(request, username):
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def get_user_personal_profile(request, username):
+def get_logged_user_profile(request, username):
+    if request.user.username != username:
+        # If the requesting user is not the same as the username in the URL, return unauthorized
+        return Response({"detail": "Unauthorized access"}, status=status.HTTP_403_FORBIDDEN)
+
     try:
         user = User.objects.get(username=username)
         serializer = UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
     except User.DoesNotExist:
+        # User not found
         return Response({"detail": "User not found"}, status=status.HTTP_404_NOT_FOUND)
     
 @api_view(['GET'])
 def get_visible_users(request):
     users = UserProfile.objects.filter(is_visible=True)
     if users:
-        serializer = UserSerializer(users, many=True)
+        serializer = UserPublicSerializer(users, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     return Response({"detail": "No users found"})
