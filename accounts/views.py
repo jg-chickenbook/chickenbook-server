@@ -98,6 +98,7 @@ def test_token(request):
 
 @api_view(['GET'])
 def get_user_public_profile(request, username):
+    print(request)
     try:
         user = UserProfile.objects.get(username=username, is_visible=True)
         serializer = UserPublicSerializer(user)

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
     
-    is_visible = serializers.BooleanField(source='profile.is_visible')
+    is_visible = serializers.BooleanField(required=False)
     
     class Meta(object):
         model = User 
