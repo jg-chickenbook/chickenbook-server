@@ -64,6 +64,7 @@ def register(request: Request) -> Response:
         return Response({"token": token.key, "user": user_data}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def logout(request: Request) -> Response:
@@ -84,7 +85,7 @@ def logout(request: Request) -> Response:
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def test_token(request: Request):
+def test_token(request: Request) -> Response:
     """_summary_
 
     Args:
@@ -97,6 +98,7 @@ def test_token(request: Request):
     print(request.user)
     return Response("passed for {}".format(request.user.username))
 
+
 @api_view(['GET'])
 def get_user_public_profile(request: Request, username: str) -> Response:
     try:
@@ -106,10 +108,11 @@ def get_user_public_profile(request: Request, username: str) -> Response:
     except User.DoesNotExist:
         return Response({"detail": "User not found"}, status=status.HTTP_404_NOT_FOUND)
     
+    
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def get_logged_user_profile(request, username):
+def get_logged_user_profile(request: Request, username: str) -> Response:
     if request.user.username != username:
         # If the requesting user is not the same as the username in the URL, return unauthorized
         return Response({"detail": "Unauthorized access"}, status=status.HTTP_403_FORBIDDEN)
@@ -122,6 +125,7 @@ def get_logged_user_profile(request, username):
         # User not found
         return Response({"detail": "User not found"}, status=status.HTTP_404_NOT_FOUND)
     
+
 @api_view(['GET'])
 def get_visible_users(request: Request) -> Response:
     users = UserProfile.objects.filter(is_visible=True)
