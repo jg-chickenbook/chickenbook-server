@@ -1,5 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.request import Request
 from accounts.serializers import UserSerializer, UserPublicSerializer
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -14,7 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 
 
 @api_view(['POST'])
-def login(request):
+def login(request: Request) -> Response:
     username = request.data.get('username')
     password = request.data.get('password')
     user = authenticate(username=username, password=password)  # This method handles user verification
@@ -33,7 +34,7 @@ def login(request):
     
 
 @api_view(['POST'])
-def register(request):
+def register(request: Request) -> Response:
     username = request.data.get('username', '')
     email = request.data.get('email', '')
     password = request.data.get('password', '')
@@ -65,7 +66,7 @@ def register(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def logout(request):
+def logout(request: Request) -> Response:
     """_summary_
 
     Args:
@@ -83,7 +84,7 @@ def logout(request):
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def test_token(request):
+def test_token(request: Request):
     """_summary_
 
     Args:
@@ -97,8 +98,7 @@ def test_token(request):
     return Response("passed for {}".format(request.user.username))
 
 @api_view(['GET'])
-def get_user_public_profile(request, username):
-    print(request)
+def get_user_public_profile(request: Request, username: str) -> Response:
     try:
         user = UserProfile.objects.get(username=username, is_visible=True)
         serializer = UserPublicSerializer(user)
@@ -123,7 +123,7 @@ def get_logged_user_profile(request, username):
         return Response({"detail": "User not found"}, status=status.HTTP_404_NOT_FOUND)
     
 @api_view(['GET'])
-def get_visible_users(request):
+def get_visible_users(request: Request) -> Response:
     users = UserProfile.objects.filter(is_visible=True)
     if users:
         serializer = UserPublicSerializer(users, many=True)
