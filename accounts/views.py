@@ -116,7 +116,6 @@ def get_logged_user_profile(request: Request, username: str) -> Response:
     if request.user.username != username:
         # If the requesting user is not the same as the username in the URL, return unauthorized
         return Response({"detail": "Unauthorized access"}, status=status.HTTP_403_FORBIDDEN)
-
     try:
         user = User.objects.get(username=username)
         serializer = UserSerializer(user)
