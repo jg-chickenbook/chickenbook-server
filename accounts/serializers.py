@@ -15,6 +15,7 @@ class UserPublicSerializer(serializers.ModelSerializer):
     
     username = serializers.CharField(source='user.username')
     email = serializers.CharField(source='user.email')
+
     
     class Meta(object):
         model = UserProfile 
