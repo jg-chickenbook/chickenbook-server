@@ -15,16 +15,22 @@ class UserProfile(models.Model):
     status = models.CharField(("Status"), max_length=20, blank=True) 
     name = models.CharField(("Full name"), max_length=50, blank=True) 
     headline = models.CharField(("Headline"), max_length=20, blank=True) 
-    mainSkills = models.CharField(("Main Skills"), max_length=50, blank=True) 
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)  # Adjust the max_length accordingly
     email = models.EmailField(("Email"), max_length=30, blank=True) 
     about = models.CharField(("About..."), max_length=1000, blank=True) 
-
-
-
+    
 
     def __str__(self):
         return self.user.username
+
+class Skills(models.Model):
+    name = models.CharField(max_length=100, default=None)  # Simplify and expand skill field
+    user_profile = models.ForeignKey(UserProfile, related_name='skills', on_delete=models.CASCADE)
+
+class Projects(models.Model):
+    name = models.CharField(max_length=200, default=None)
+    link = models.URLField(max_length=200, blank=True)
+    user_profile = models.ForeignKey(UserProfile, related_name='projects', on_delete=models.CASCADE)   
     
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
