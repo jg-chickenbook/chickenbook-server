@@ -1,14 +1,14 @@
 POST http://127.0.0.1:8000/api/accounts/login
 Content-Type: application/json
 
-{"username": "Skusam11", "password": "Ahoj12345"}
+{"username": "Jozi1", "password": "Ahoj12345"}
 
 ###
 
 POST http://127.0.0.1:8000/api/accounts/register
 Content-Type: application/json
 
-{"username": "Okej1", "password": "Ahoj12345", "email": "okej1@okej.com"}
+{"username": "Jozi1", "password": "Ahoj12345", "email": "jozi1@skusam.com"}
 
 ###
 
@@ -23,21 +23,20 @@ Authorization: Token f447aa6bb71925842c15d4ff70dd36f121126cbc
 
 POST http://127.0.0.1:8000/api/accounts/logout
 Content-Type: application/json
-Authorization: Token c4cf53fad0b5be17b3c0d72fcb0d336e2ba37f5d
+Authorization: Token 2775b61e2299cb11ab0310c768f68dc853a56759
 
 {}
 
 ###
 
-GET http://127.0.0.1:8000/api/accounts/users/Skusam4
+GET http://127.0.0.1:8000/api/accounts/users/Skusam13
 Content-Type: application/json
 
 ###
-
-GET http://127.0.0.1:8000/api/accounts/user-profile/Skusam3
+GET http://127.0.0.1:8000/api/accounts/user-profile/Skusam13
 Content-Type: application/json
 # HERE WE NEED TO RECIVE AS A HEADER LINE BELOW key: Authorization value: TOKEN 34klnasldaoid...(user token stored on client side) 
-Authorization: Token a37e41cca27024a8b4839c9f360af76fec2ed9b7
+Authorization: Token 47639153103302da869f26396cd22bef3588adfa
 
 {}
 
