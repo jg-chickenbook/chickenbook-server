@@ -1,13 +1,13 @@
 POST http://127.0.0.1:8000/api/accounts/login
 Content-Type: application/json
-{"username": "Skusam15", "password": "Ahoj12345"}
+{"username": "Skusam16", "password": "Ahoj12345"}
 
 
 ###
 
 POST http://127.0.0.1:8000/api/accounts/register
 Content-Type: application/json
-{"username": "Skusam15", "password": "Ahoj12345", "email": "skusam15@skusam.com"}
+{"username": "Skusam16", "password": "Ahoj12345", "email": "skusam16@skusam.com"}
 
 
 ###

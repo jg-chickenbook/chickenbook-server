@@ -13,10 +13,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserPublicSerializer(serializers.ModelSerializer):
     
-    username = serializers.CharField(source='user.username')
+    # username = serializers.CharField(source='user.username')
     email = serializers.CharField(source='user.email')
 
     
     class Meta(object):
         model = UserProfile 
-        fields = ['is_visible', 'user_id', 'username', 'email']
+        fields = ['user_id', 'email', 'status', 'name', 'headline', 'mainSkills', 'phone_number', 'email', 'about']
+        
+        
