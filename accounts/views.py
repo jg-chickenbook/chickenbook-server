@@ -81,23 +81,6 @@ def logout(request: Request) -> Response:
     request.user.auth_token.delete()
     return Response({"detail": "Successfully logged out."}, status=status.HTTP_204_NO_CONTENT)
 
-#Make sure the tokens works also template for authentificated user 
-@api_view(['GET'])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def test_token(request: Request) -> Response:
-    """_summary_
-
-    Args:
-        request (GET): _description_
-
-    Function return passed msg if user is logged in !
-    Returns:
-        json: validation msg
-    """
-    print(request.user)
-    return Response("passed for {}".format(request.user.username))
-
 
 @api_view(['GET'])
 def get_user_public_profile(request: Request, user_id: int) -> Response:
@@ -109,21 +92,43 @@ def get_user_public_profile(request: Request, user_id: int) -> Response:
         return Response({"detail": "User not found"}, status=status.HTTP_404_NOT_FOUND)
     
     
-@api_view(['GET'])
+# @api_view(['GET'])
+# @authentication_classes([SessionAuthentication, TokenAuthentication])
+# @permission_classes([IsAuthenticated])
+# def get_logged_user_profile(request: Request, username: str) -> Response:
+#     if request.user.username != username:
+#         # If the requesting user is not the same as the username in the URL, return unauthorized
+#         return Response({"detail": "Unauthorized access"}, status=status.HTTP_403_FORBIDDEN)
+#     try:
+#         user = User.objects.get(username=username)
+#         serializer = UserSerializer(user)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
+#     except User.DoesNotExist:
+#         # User not found
+#         return Response({"detail": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+@api_view(['GET', 'POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def get_logged_user_profile(request: Request, username: str) -> Response:
+def get_logged_user_profile(request, username):
     if request.user.username != username:
-        # If the requesting user is not the same as the username in the URL, return unauthorized
         return Response({"detail": "Unauthorized access"}, status=status.HTTP_403_FORBIDDEN)
     try:
-        user = User.objects.get(username=username)
-        serializer = UserSerializer(user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    except User.DoesNotExist:
-        # User not found
+        user_profile = UserProfile.objects.get(user__username=username)
+    except UserProfile.DoesNotExist:
         return Response({"detail": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = UserPublicSerializer(user_profile)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    elif request.method == 'POST':
+        serializer = UserPublicSerializer(user_profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
     
+
 
 @api_view(['GET'])
 def get_visible_users(request: Request) -> Response:

@@ -4,7 +4,7 @@
 POST http://127.0.0.1:8000/api/accounts/register
 Content-Type: application/json
 
-{"username": "Skusam16", "password": "Ahoj12345", "email": "skusam15@skusam.com"}
+{"username": "Skusam16", "password": "Ahoj12345", "email": "skusam16@skusam.com"}
 
 
 ### Login User
@@ -24,14 +24,21 @@ Authorization: Token ec5cd8755613964b0de9584672bcd62812a60379
 # GET PROFILES -> Integers ../users/15 -> user_id
 
 ### Get logged user profile...(mine)
+POST http://127.0.0.1:8000/api/accounts/user-profile/Skusam16
+Content-Type: application/json
+Authorization: Token 578615520890193364b4951811474396488d84a4
+
+{"email": "ahoj@ahoj.sk", "status": "Status", "name":"Ferko Hrasko", "headline":"Kozmonaut", "phone_number":"0915555999", "email":"verejny@gmail.com", "about":"Som super", "is_visivble": "True"}
+
+### Get logged user profile...(mine)
 GET http://127.0.0.1:8000/api/accounts/user-profile/Skusam16
 Content-Type: application/json
-Authorization: Token d56d60f8c279487594e44aa0d8cfa622ac1acecc
+Authorization: Token 578615520890193364b4951811474396488d84a4
 
 {}
 
 ### Get public user profile
-GET http://127.0.0.1:8000/api/accounts/users/15
+GET http://127.0.0.1:8000/api/accounts/users/32
 Content-Type: application/json
 
 {}
@@ -47,21 +54,21 @@ Content-Type: application/json
 ### Add Skills
 POST http://127.0.0.1:8000/api/accounts/add-skill
 Content-Type: application/json
-Authorization: Token d56d60f8c279487594e44aa0d8cfa622ac1acecc
+Authorization: Token 578615520890193364b4951811474396488d84a4
 
 {"name": "Java"}
 
 ### Edit Skill
-PUT http://127.0.0.1:8000/api/accounts/skills/7
+PUT http://127.0.0.1:8000/api/accounts/skills/4
 Content-Type: application/json
-Authorization: Token d56d60f8c279487594e44aa0d8cfa622ac1acecc
+Authorization: Token 578615520890193364b4951811474396488d84a4
 
-{"name" : "Javarino"}
+{"name" : "JavarinoEdited"}
 
 ### Delete skill
-DELETE  http://127.0.0.1:8000/api/accounts/skills/4
+DELETE  http://127.0.0.1:8000/api/accounts/skills/3
 Content-Type: application/json
-Authorization: Token d56d60f8c279487594e44aa0d8cfa622ac1acecc
+Authorization: Token 578615520890193364b4951811474396488d84a4
 
 {}
 
@@ -70,20 +77,21 @@ Authorization: Token d56d60f8c279487594e44aa0d8cfa622ac1acecc
 ### Add Projects
 POST http://127.0.0.1:8000/api/accounts/add-project
 Content-Type: application/json
-Authorization: Token d56d60f8c279487594e44aa0d8cfa622ac1acecc
+Authorization: Token 578615520890193364b4951811474396488d84a4
 
 {"name": "Bomba", "link": "https://ahoj.sk"}
 
 ### Edit Project
-PUT http://127.0.0.1:8000/api/accounts/projects/3
+PUT http://127.0.0.1:8000/api/accounts/projects/4
 Content-Type: application/json
-Authorization: Token d56d60f8c279487594e44aa0d8cfa622ac1acecc
+Authorization: Token 578615520890193364b4951811474396488d84a4
 
-{"name" : "project", "link": "https://aosdjai.sk"}
+{"name" : "projectEdited", "link": "https://aosdjasssssssi.sk"}
 
 ### Delete project
-DELETE  http://127.0.0.1:8000/api/accounts/projects/4
+DELETE  http://127.0.0.1:8000/api/accounts/projects/3
 Content-Type: application/json
-Authorization: Token d56d60f8c279487594e44aa0d8cfa622ac1acecc
+Authorization: Token 578615520890193364b4951811474396488d84a4
 
 {}
+

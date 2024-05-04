@@ -27,11 +27,10 @@ class UserPublicSerializer(serializers.ModelSerializer):
     # username = serializers.CharField(source='user.username')
     skills = SkillSerializer(many=True, read_only=True)
     projects = ProjectSerializer(many=True, read_only=True)
-    email = serializers.CharField(source='user.email')
 
     
     class Meta(object):
         model = UserProfile 
-        fields = ['user_id', 'email', 'status', 'name', 'headline', 'phone_number', 'email', 'about', 'skills', 'projects']
+        fields = ['user_id', 'email', 'status', 'name', 'headline', 'phone_number', 'about', 'skills', 'projects']
         
         
