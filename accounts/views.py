@@ -136,25 +136,20 @@ def get_visible_users(request: Request) -> Response:
 
 # SKILLS
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def skill_list(request):
-    if request.method == 'GET':
-        skills = Skills.objects.filter(user_profile=request.user.profile)
-        serializer = SkillSerializer(skills, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    elif request.method == 'POST':
-        serializer = SkillSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user_profile=request.user.profile)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+def add_skill(request: Request) -> Response:
+    serializer = SkillSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(user_profile=request.user.profile)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def skill_detail(request, pk):
+def skill_detail(request: Request, pk: int) -> Response:
     try:
         skill = Skills.objects.get(pk=pk, user_profile=request.user.profile)
     except Skills.DoesNotExist:
@@ -171,29 +166,24 @@ def skill_detail(request, pk):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
         skill.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({'detail': 'Skill deleted'}, status=status.HTTP_204_NO_CONTENT)
     
 # PROJECTS
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def project_list(request):
-    if request.method == 'GET':
-        projects = Projects.objects.filter(user_profile=request.user.profile)
-        serializer = ProjectSerializer(projects, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    elif request.method == 'POST':
-        serializer = ProjectSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user_profile=request.user.profile)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+def add_project(request: Request) -> Response:
+    serializer = ProjectSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(user_profile=request.user.profile)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT', 'DELETE'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def project_detail(request, pk):
+def project_detail(request: Request, pk: int) -> Response:
     try:
         project = Projects.objects.get(pk=pk, user_profile=request.user.profile)
     except Projects.DoesNotExist:
@@ -210,5 +200,5 @@ def project_detail(request, pk):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
         project.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({'detail': 'Project deleted'}, status=status.HTTP_204_NO_CONTENT)
 

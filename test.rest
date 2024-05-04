@@ -1,74 +1,89 @@
+# AUTHENTICATION
+
+### Register User
+POST http://127.0.0.1:8000/api/accounts/register
+Content-Type: application/json
+
+{"username": "Skusam16", "password": "Ahoj12345", "email": "skusam15@skusam.com"}
+
+
+### Login User
 POST http://127.0.0.1:8000/api/accounts/login
 Content-Type: application/json
 
 {"username": "Skusam16", "password": "Ahoj12345"}
 
 
-###
-
-POST http://127.0.0.1:8000/api/accounts/register
-Content-Type: application/json
-
-{"username": "Skusam16", "password": "Ahoj12345", "email": "skusam16@skusam.com"}
-
-
-###
-
-GET http://127.0.0.1:8000/api/accounts/test_token
-Content-Type: application/json
-# HERE WE NEED TO RECIVE AS A HEADER LINE BELOW key: Authorization value: TOKEN 34klnasldaoid...(user token stored on client side) 
-Authorization: Token f447aa6bb71925842c15d4ff70dd36f121126cbc
-
-{}
-
-###
-
+### Log out User
 POST http://127.0.0.1:8000/api/accounts/logout
 Content-Type: application/json
+Authorization: Token ec5cd8755613964b0de9584672bcd62812a60379
 
 {}
 
-###
+# GET PROFILES -> Integers ../users/15 -> user_id
 
-GET http://127.0.0.1:8000/api/accounts/user-profile/Skusam15
+### Get logged user profile...(mine)
+GET http://127.0.0.1:8000/api/accounts/user-profile/Skusam16
 Content-Type: application/json
-# HERE WE NEED TO RECIVE AS A HEADER LINE BELOW key: Authorization value: TOKEN 34klnasldaoid...(user token stored on client side) 
-Authorization: Token 73055e0d17f051ee34d212280080d941e4854380
+Authorization: Token d56d60f8c279487594e44aa0d8cfa622ac1acecc
 
 {}
 
-###
-
+### Get public user profile
 GET http://127.0.0.1:8000/api/accounts/users/15
 Content-Type: application/json
 
 {}
 
-###
-GET http://127.0.0.1:8000/api/accounts/user-profile/Skusam13
-Content-Type: application/json
-# HERE WE NEED TO RECIVE AS A HEADER LINE BELOW key: Authorization value: TOKEN 34klnasldaoid...(user token stored on client side) 
-Authorization: Token 47639153103302da869f26396cd22bef3588adfa
-
-{}
-
-###
-
+### Get all visible Users
 GET http://127.0.0.1:8000/api/accounts/home/visible
 Content-Type: application/json
 
 {}
 
-###
-POST http://127.0.0.1:8000/api/accounts/skills
+# SKILLS CRUD -> Integers ../skills/4 && ../projects/4 are skill||project id
+
+### Add Skills
+POST http://127.0.0.1:8000/api/accounts/add-skill
 Content-Type: application/json
 Authorization: Token d56d60f8c279487594e44aa0d8cfa622ac1acecc
 
-{"name": "Java Frajer"}
+{"name": "Java"}
 
-###
-POST http://127.0.0.1:8000/api/accounts/projects
+### Edit Skill
+PUT http://127.0.0.1:8000/api/accounts/skills/7
+Content-Type: application/json
+Authorization: Token d56d60f8c279487594e44aa0d8cfa622ac1acecc
+
+{"name" : "Javarino"}
+
+### Delete skill
+DELETE  http://127.0.0.1:8000/api/accounts/skills/4
+Content-Type: application/json
+Authorization: Token d56d60f8c279487594e44aa0d8cfa622ac1acecc
+
+{}
+
+# PROJECTS CRUD
+
+### Add Projects
+POST http://127.0.0.1:8000/api/accounts/add-project
 Content-Type: application/json
 Authorization: Token d56d60f8c279487594e44aa0d8cfa622ac1acecc
 
 {"name": "Bomba", "link": "https://ahoj.sk"}
+
+### Edit Project
+PUT http://127.0.0.1:8000/api/accounts/projects/3
+Content-Type: application/json
+Authorization: Token d56d60f8c279487594e44aa0d8cfa622ac1acecc
+
+{"name" : "project", "link": "https://aosdjai.sk"}
+
+### Delete project
+DELETE  http://127.0.0.1:8000/api/accounts/projects/4
+Content-Type: application/json
+Authorization: Token d56d60f8c279487594e44aa0d8cfa622ac1acecc
+
+{}
